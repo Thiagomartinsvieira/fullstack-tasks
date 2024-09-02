@@ -11,9 +11,10 @@ const Login = () => {
 const handleLogin = async (e) => {
   e.preventDefault();
   try {
-    const token = await loginUser(email, password);
+    const response = await loginUser(email, password);
+    const token = response.token;
     localStorage.setItem('token', token);
-    console.log("token: ", token)
+    console.log("token from login: ", token)
     navigate('/dashboard')
   } catch (error) {
     alert("Error to regusrer user: " + error)
