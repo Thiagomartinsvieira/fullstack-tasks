@@ -5,7 +5,15 @@ const { secret } = require('../config/jwtConfig');
 
 const registerUser = async (name, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
-    return User.create({ name, email, password: hashedPassword });
+    
+    const user = await User.create({ name, email, password: hashedPassword });
+
+    const token = jwt.sign({ id: user.id, name: user.name }, secret, { expiresIn: '1h' });
+
+    return {
+        user,
+        token
+    } 
 };
 
 const loginUser = async (email, password) => {
