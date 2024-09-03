@@ -13,13 +13,24 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
    if(password !== confirmPassword) {
-    alert("Error")
+    alert("Passwords do not match. Please try again.");
+    setPassword('');
+    setConfirmPassword('');
+    return
    } else {
-    try {
-      await registerUser(name, email, password);
+    try 
+    {
+      const response = await registerUser(name, email, password);
+      const token = response.user.token;
+      console.log("token", token)
+
+     if( token ){
+      localStorage.setItem('token', token);
       alert('User registered successfully!');
       navigate('/dashboard')
-      
+     } else {
+      throw new Error('No token returned. Registration failed.');
+     }
     } catch (error) {
       alert('Error registering user: ' + error.message);
     }
