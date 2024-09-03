@@ -1,11 +1,32 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {jwtDecode} from 'jwt-decode';
+import { Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserName(decodedToken.name);
+    }
+  }, []);
+
+  const firstName = userName.split(' ')[0];
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUserName('');
+    navigate('/');
+  };
+
   return (
     <div>
       <nav
         className="block w-full max-w-screen-xl px-6 py-3 mx-auto text-white border shadow-md rounded-xl 
-  border-white/80 bg-opacity-80 bg-black backdrop-blur-2xl backdrop-saturate-200"
+        border-white/80 bg-opacity-80 bg-black backdrop-blur-2xl backdrop-saturate-200"
       >
         <div className="flex items-center justify-between text-blue-gray-900">
           <a
@@ -17,37 +38,39 @@ const Nav = () => {
           <div className="hidden lg:block">
             <ul className="flex flex-col gap-2 my-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
               <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-                <a
-                  href="#"
-                  className="flex items-center transition-colors hover:text-blue-500"
-                >
-                  Pages
-                </a>
+                <Link to="/">Home</Link>
               </li>
-              <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-                <a
-                  href="#"
-                  className="flex items-center transition-colors hover:text-blue-500"
-                >
-                  Account
-                </a>
-              </li>
-              <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-                <Link to={"/register"}>
-                Register
-                </Link>
-              </li>
-              <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-                <Link to={"/login"}>Login</Link>
-              </li>
+              {userName && (
+                <>
+                   <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <Link to="/settings">Settings</Link>
+                  </li>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <Link to="/my-tasks">My Tasks</Link>
+                  </li>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <Link to="/profile">{firstName}</Link>
+                  </li>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <button onClick={handleLogout}>Logout</button>
+                  </li>
+                </>
+              )}
+              {!userName && (
+                <>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <Link to="/register">Register</Link>
+                  </li>
+                  <li className="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    <Link to="/login">Login</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
-          <button
-            className="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
-            type="button"
-          >
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"></span>
-          </button>
         </div>
       </nav>
     </div>
