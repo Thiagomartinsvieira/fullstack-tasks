@@ -1,7 +1,10 @@
+// app.js (arquivo com configuração e rotas, sem inicialização do servidor)
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const sequelize = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 dotenv.config();
 
@@ -14,6 +17,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/api/auth', authRoutes);
 
-app.listen(3000, () => console.log('Server is running on port 3000'));
+app.use('/api/auth', authRoutes);
+app.use('/tasks', taskRoutes);
+
+sequelize.sync().catch(error => {
+    console.log('Unable to connect to the database: ', error);
+});
+
+module.exports = app;
