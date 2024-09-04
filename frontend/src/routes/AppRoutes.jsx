@@ -17,7 +17,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path='/login' element={<Login /> } />
         <Route path='/dashboard' element={<Dashboard /> } />
-        <Route path='my-tasks' element={<Tasks />} />
+        <Route path='my-tasks' element={<Tasks token={token} /> } />
         <Route path='tasks/new' element={<CreateTask token={token} />} /> 
         <Route path='/tasks/edit/:id' element={<EditTask token={token} />} /> 
       </Routes>
