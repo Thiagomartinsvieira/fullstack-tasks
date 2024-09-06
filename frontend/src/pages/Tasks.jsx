@@ -5,11 +5,16 @@ import { deleteTask, getTasks, toggleTaskCompletion } from "../services/TaskServ
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 
-const Tasks = ({ token }) => {
+const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token');
+
 
     useEffect(() => {
+
         const fetchTaskData = async () => {
+           
             try {
                 const data = await getTasks(token);
                 console.log("Fetched task data:", data);

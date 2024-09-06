@@ -10,7 +10,7 @@ import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
-
+  
   return (
     <BrowserRouter>
       <Routes>
