@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token');
 
 

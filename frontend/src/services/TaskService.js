@@ -76,3 +76,18 @@ export const deleteTask = async (id, token) => {
         throw error;
     }
 };
+
+export const toggleTaskCompletion = async(id, token) => {
+    try {
+        const response = await axios.patch(`${API_URL}/${id}/toggle-completion`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log("Error toggling task completetion:", error)
+        throw error;
+    }
+}
+
