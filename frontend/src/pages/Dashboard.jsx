@@ -17,7 +17,7 @@ const Dashboard = () => {
         const decodedToken = jwtDecode(token);
         setUserName(decodedToken.name || 'Anonymous User');
 
-        // Simulated data for activities and notifications
+        // Simulated data for activities and notifications up comming
         setRecentActivities([
           { id: 1, action: 'Created new task: "Complete project setup"' },
           { id: 2, action: 'Marked task "Research dashboard design" as done' },
@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-gray-100 p-4">
       <Nav />
       <div className="container mx-auto p-6">
         <div className="bg-white shadow-lg rounded-lg p-10 text-center">
@@ -47,16 +47,16 @@ const Dashboard = () => {
             This is your personalized dashboard. Manage your account, check your tasks, view reports, and more!
           </p>
 
-          {/* Grid layout for main sections */}
+         
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
-            {/* Your Tasks Section */}
+            
             <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <h2 className="text-2xl font-semibold mb-4">Your Tasks</h2>
               <p className="text-white">View and manage your tasks with ease.</p>
               <button className="mt-4 px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md">Go to Tasks</button>
             </div>
 
-            {/* Account Settings Section */}
+            
             <div className="bg-green-500 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <h2 className="text-2xl font-semibold mb-4">Account Settings</h2>
               <p className="text-white">Manage your account settings and update your profile.</p>

@@ -15,6 +15,9 @@ const EditTask = ({ token }) => {
 
     useEffect(() => {
         const fetchTaskData = async () => {
+            if(!token) {
+                navigate('/login')
+            }
             try {
                 const data = await getTaskById(id, token);
                 console.log("Fetched task data:", data);

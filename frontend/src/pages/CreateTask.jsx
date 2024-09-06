@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import { createTask } from "../services/TaskService";
@@ -9,6 +9,12 @@ const CreateTask = ({ token }) => {
     const [description, setDescription] = useState('');
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!token) {
+            navigate('/login')
+        }
+    }, [navigate, token])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
