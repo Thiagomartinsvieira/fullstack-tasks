@@ -31,7 +31,7 @@ const EditTask = ({ token }) => {
         };
 
         fetchTaskData();
-    }, [id, token]);
+    }, [id, token, navigate]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

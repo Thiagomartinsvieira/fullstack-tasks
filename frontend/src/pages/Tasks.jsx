@@ -9,11 +9,8 @@ const Tasks = () => {
     const [tasks, setTasks] = useState([]);
     const token = localStorage.getItem('token');
 
-
     useEffect(() => {
-
         const fetchTaskData = async () => {
-           
             try {
                 const data = await getTasks(token);
                 console.log("Fetched task data:", data);
@@ -27,15 +24,15 @@ const Tasks = () => {
     }, [token]);
 
     const handleDeleteTask = async (id) => {
-      const isConfirmed = window.confirm("Are you sure you want to delete this task?");
-      if(isConfirmed) {
-        try {
-          await deleteTask(id, token);
-          setTasks(tasks.filter(task => task.id !== id));
-        } catch (error) {
-          console.log("Error deleting task", error);
+        const isConfirmed = window.confirm("Are you sure you want to delete this task?");
+        if (isConfirmed) {
+            try {
+                await deleteTask(id, token);
+                setTasks(tasks.filter(task => task.id !== id));
+            } catch (error) {
+                console.log("Error deleting task", error);
+            }
         }
-      }
     }
 
     const handleToggleTaskCompletion = async (id) => {
@@ -50,7 +47,7 @@ const Tasks = () => {
     return (
         <div className="flex flex-col min-h-screen bg-gray-100 p-4">
             <Nav />
-            <div className="flex-grow container mx-auto mt-8">
+            <div className="flex-grow container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-end mb-4">
                     <Link 
                         to="/tasks/new" 
@@ -59,39 +56,45 @@ const Tasks = () => {
                         Create New Task
                     </Link>
                 </div>
-                <ul className="space-y-4">
-                    {tasks.map(task => (
-                        <li key={task.id} className="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
-                            <div>
-                                <h2 className={`text-xl font-bold ${task.completed ? 'text-green-600 line-through' : 'text-gray-800'}`}>
-                                    {task.title}
-                                </h2>
-                                <p className={`text-gray-600 ${task.completed ? 'line-through' : ''}`}>
-                                    {task.description}
-                                </p>
-                            </div>
-                            <div className="space-x-2">
-                                <button 
-                                    onClick={() => handleToggleTaskCompletion(task.id)} 
-                                    className={`px-4 py-2 rounded-md transition duration-300 ${task.completed ? 'bg-yellow-600 hover:bg-yellow-700 text-white' : 'bg-gray-600 hover:bg-gray-700 text-white'}`}
-                                >
-                                    {task.completed ? 'Undo' : 'Complete'}
-                                </button>
-                                <Link to={`/tasks/edit/${task.id}`} 
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
-                                >
-                                    Edit
-                                </Link>
-                                <button 
-                                    onClick={() => handleDeleteTask(task.id)} 
-                                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {tasks.length === 0 ? (
+                    <div className="bg-white shadow-md rounded-lg p-4 text-center">
+                        <p className="text-lg text-gray-700">You don't have any tasks yet.</p>
+                    </div>
+                ) : (
+                    <ul className="space-y-4">
+                        {tasks.map(task => (
+                            <li key={task.id} className="bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                                <div>
+                                    <h2 className={`text-lg sm:text-xl font-bold ${task.completed ? 'text-green-600 line-through' : 'text-gray-800'}`}>
+                                        {task.title}
+                                    </h2>
+                                    <p className={`text-sm sm:text-base text-gray-600 ${task.completed ? 'line-through' : ''}`}>
+                                        {task.description}
+                                    </p>
+                                </div>
+                                <div className="mt-4 sm:mt-0 flex flex-wrap gap-2">
+                                    <button 
+                                        onClick={() => handleToggleTaskCompletion(task.id)} 
+                                        className={`px-3 py-1 rounded-md transition duration-300 ${task.completed ? 'bg-yellow-600 hover:bg-yellow-700 text-white' : 'bg-gray-600 hover:bg-gray-700 text-white'}`}
+                                    >
+                                        {task.completed ? 'Undo' : 'Complete'}
+                                    </button>
+                                    <Link to={`/tasks/edit/${task.id}`} 
+                                        className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition duration-300"
+                                    >
+                                        Edit
+                                    </Link>
+                                    <button 
+                                        onClick={() => handleDeleteTask(task.id)} 
+                                        className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition duration-300"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
             <Footer />
         </div>
