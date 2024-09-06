@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <Nav />
       <div className="relative overflow-hidden bg-gray-900">
-        <div className="flex flex-col items-center justify-center min-h-screen text-center bg-cover bg-center" style={{ backgroundImage: 'url(https://img.freepik.com/free-photo/serious-unshaven-man-drinks-takeaway-coffee-colorful-blank-stickers-attached-wall-drinks-coffee-from-paper-cup-holds-notepads_273609-34096.jpg?w=1060&t=st=1725585760~exp=1725586360~hmac=aaf767d079748dc7ce3be9246346fb178849a05f335c34212610e8f309f68616)' }}>
+        <div className="flex flex-col items-center justify-center min-h-screen text-center bg-cover bg-center" style={{ backgroundImage: 'url(./images/home/home_image1.jpg)' }}>
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 p-8">
             <h1 className="text-5xl font-bold text-white mb-4">Welcome to TaskMaster</h1>
@@ -32,17 +32,17 @@ const Home = () => {
             <h2 className="text-3xl font-bold text-center mb-8">Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-lg">
-                <img src="https://img.freepik.com/free-vector/task-distribution-concept-interaction-departments-business-teamwork-management-business-profit-financial-growth-isolated-flat-vector-illustration_613284-3399.jpg?w=1060&t=st=1725585812~exp=1725586412~hmac=0a75205bc19576df182341c522edaeb68a6dff11fe528cbc459193f389f1f8da" alt="Feature 1" className="w-12 h-12 mb-4" />
+                <img src="./images/home/home_image2.jpg" alt="Feature 1" className="w-12 h-12 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Organize Tasks</h3>
                 <p>Efficiently manage and track your tasks in one place.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-lg">
-                <img src="https://img.freepik.com/free-vector/isometric-time-management-concept-illustrated_52683-55534.jpg?w=740&t=st=1725585835~exp=1725586435~hmac=6f7f3d809071418ff31967c3d1560a38006b714de390cfbb8fbf998abef9ab6b" alt="Feature 2" className="w-12 h-12 mb-4" />
+                <img src="./images/home/home_image3.jpg" alt="Feature 2" className="w-12 h-12 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Set Deadlines</h3>
                 <p>Never miss a deadline with our intuitive scheduling features.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-lg">
-                <img src="https://img.freepik.com/free-vector/flat-scrum-task-board-with-color-stick-paper-notes_88138-931.jpg?w=1060&t=st=1725585844~exp=1725586444~hmac=d54d7399a8c02c6f30bafdb9f88838807797371cbb09ebd36953377b0d7eb66a" alt="Feature 3" className="w-12 h-12 mb-4" />
+                <img src="./images/home/home_image4.jpg" alt="Feature 3" className="w-12 h-12 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Collaborate Easily</h3>
                 <p>Work with your team seamlessly and share tasks effortlessly.</p>
               </div>
