@@ -1,3 +1,4 @@
+// authService
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
@@ -28,21 +29,23 @@ const loginUser = async (email, password) => {
 };
 
 
-const updateUserName = async (email, newName) => {
- try {
-    const user = await User.findOne({where: {email}});
+const updateUserName =  async (userId, newName) => {
+    const user = await User.findByPk(userId);
     if(!user) {
-        throw new Error("User not found!")
+        throw new Error("User not found");
     }
 
     user.name = newName;
     await user.save();
 
-    return user;
-} catch (error) {
-    throw error;   
- }
+    const token = jwt.sign({id: user.id, name: user.name, email: user.email}, secret, {expiresIn: "1h"});
+
+    return {
+        user,
+        token
+    }
 }
+
 
 module.exports = {
     registerUser,
