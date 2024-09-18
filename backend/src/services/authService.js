@@ -27,7 +27,25 @@ const loginUser = async (email, password) => {
     return token;
 };
 
+
+const updateUserName = async (email, newName) => {
+ try {
+    const user = await User.findOne({where: {email}});
+    if(!user) {
+        throw new Error("User not found!")
+    }
+
+    user.name = newName;
+    await user.save();
+
+    return user;
+} catch (error) {
+    throw error;   
+ }
+}
+
 module.exports = {
     registerUser,
     loginUser,
+    updateUserName,
 };
