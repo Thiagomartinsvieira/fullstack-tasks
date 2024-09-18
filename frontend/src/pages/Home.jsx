@@ -2,6 +2,9 @@ import Footer from '../components/Footer';
 import Nav from '../components/Nav';
 
 const Home = () => {
+
+  const token = localStorage.getItem("token")
+
   return (
     <>
       <Nav />
@@ -11,7 +14,8 @@ const Home = () => {
           <div className="relative z-10 p-8">
             <h1 className="text-5xl font-bold text-white mb-4">Welcome to TaskMaster</h1>
             <p className="text-lg text-gray-300 mb-8">Manage your tasks efficiently and stay organized.</p>
-            <div className="flex justify-center space-x-4">
+          {!token && (
+              <div className="flex justify-center space-x-4">
               <a
                 href="/register"
                 className="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
@@ -25,6 +29,7 @@ const Home = () => {
                 Login
               </a>
             </div>
+          )}
           </div>
         </div>
         <section className="py-16 bg-gray-100">

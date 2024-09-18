@@ -4,13 +4,15 @@ import { useNavigate, Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import { createTask } from "../services/TaskService";
 
-const CreateTask = ({ token }) => {
+const CreateTask = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
     const navigate = useNavigate();
+     const token = localStorage.getItem('token')
 
     useEffect(() => {
+       
         if(!token) {
             navigate('/login')
         }

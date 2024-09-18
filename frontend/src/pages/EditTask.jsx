@@ -4,7 +4,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import { getTaskById, updateTaskById } from "../services/TaskService";
 
-const EditTask = ({ token }) => {
+const EditTask = () => {
     const { id } = useParams();
     const [taskData, setTaskData] = useState({
         title: "",
@@ -12,6 +12,7 @@ const EditTask = ({ token }) => {
     });
 
     const navigate = useNavigate();
+    const token = localStorage.getItem("token")
 
     useEffect(() => {
         const fetchTaskData = async () => {

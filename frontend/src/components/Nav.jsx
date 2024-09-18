@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { jwtDecode } from 'jwt-decode';
 import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../services/AuthService";
 
 const Nav = () => {
   const [userName, setUserName] = useState('');
@@ -17,9 +18,10 @@ const Nav = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    logoutUser();
     setUserName('');
     navigate('/');
+    // window.location.reload();
   };
 
   const toggleMenu = () => {
