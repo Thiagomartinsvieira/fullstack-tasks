@@ -13,6 +13,24 @@ export const loginUser = async (email, password) => {
     return response.data;
 };
 
+
+export const updateName = async (name) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.put(
+        `${API_URL}profile`, 
+        {name},
+        {headers: {
+            Authorization: `Bearer ${token}`
+        }}
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error updating name:", error.message);
+    throw error
+  }
+}
+
 export const logoutUser = () => {
     localStorage.removeItem('token')
 }

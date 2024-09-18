@@ -42,7 +42,7 @@ const updateUserName =  async (userId, newName) => {
 
     return {
         user,
-        token
+        token,
     }
 }
 
