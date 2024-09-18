@@ -24,6 +24,7 @@ export const updateName = async (name) => {
             Authorization: `Bearer ${token}`
         }}
     );
+    localStorage.setItem("token", response.data.token)
     return response.data;
   } catch (error) {
     console.log("Error updating name:", error.message);
