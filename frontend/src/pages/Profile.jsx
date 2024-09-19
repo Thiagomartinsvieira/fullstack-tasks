@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode'; 
 import { useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import { logoutUser, updateUser } from '../services/AuthService';
+import { getProfile, logoutUser, updateUser } from '../services/AuthService';
 
 const Profile = () => {
-  const [userDetails, setUserDetails] = useState({ name: '', email: '' });
+  const [userDetails, setUserDetails] = useState({ name: '', email: '', phone: '', });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const updateProfile = () => {
-    updateUser(userDetails.name, userDetails.email)
+    updateUser(userDetails.name, userDetails.email, userDetails.phone)
       .then(() => {
         console.log("User updated with Successfuly")
       })
@@ -21,24 +20,24 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
+        setUserDetails({
+          name: data.user.name || '',
+          email: data.user.email || '',
+          phone: data.user.phoneNumber || ''
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
         navigate('/login');
-      } else {
-        try {
-          const decoded = jwtDecode(token);
-          setUserDetails({ name: decoded.name || 'Anonymous User', email: decoded.email || 'No Email' });
-        } catch (error) {
-          console.error("Error decoding token:", error);
-          navigate('/login');
-        }
       }
-      setLoading(false);
     };
 
-    checkToken();
+    fetchProfile();
   }, [navigate]);
+
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen bg-gray-100">Loading...</div>;
@@ -73,6 +72,18 @@ const Profile = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                 />
               </div>
+
+
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-medium mb-2">Phone</label>
+                <input
+                  type="tel"
+                  value={userDetails.phone}
+                  onChange={(e) => setUserDetails({...userDetails, phone: e.target.value})}
+                  className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                />
+              </div>
+
 
               <button
               onClick={updateProfile}

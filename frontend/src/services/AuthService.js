@@ -14,12 +14,12 @@ export const loginUser = async (email, password) => {
 };
 
 
-export const updateUser = async (name, email) => {
+export const updateUser = async (name, email, phoneNumber) => {
   const token = localStorage.getItem("token");
   try {
     const response = await axios.put(
         `${API_URL}profile`, 
-        {name,email},
+        {name,email, phoneNumber},
         {headers: {
             Authorization: `Bearer ${token}`
         }}
@@ -31,6 +31,22 @@ export const updateUser = async (name, email) => {
     throw error
   }
 }
+
+export const getProfile = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.get(`${API_URL}profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching profile:", error.message);
+    throw error;
+  }
+};
 
 export const logoutUser = () => {
     localStorage.removeItem('token')

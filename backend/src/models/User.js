@@ -1,3 +1,4 @@
+// User model
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
@@ -17,6 +18,14 @@ const User = sequelize.define('User', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+
+    phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            is: /^[0-9]+$/i,
+        }
     },
 });
 
