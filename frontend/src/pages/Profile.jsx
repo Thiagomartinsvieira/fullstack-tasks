@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import { logoutUser, updateName } from '../services/AuthService';
+import { logoutUser, updateUser } from '../services/AuthService';
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState({ name: '', email: '' });
@@ -11,12 +11,12 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const updateProfile = () => {
-    updateName(userDetails.name)
+    updateUser(userDetails.name, userDetails.email)
       .then(() => {
-        console.log("Name updated with Successfuly")
+        console.log("User updated with Successfuly")
       })
       .catch((error) => {
-        console.log("Error to update name:", error);
+        console.log("Error to update user:", error);
       });
   }
 
@@ -69,7 +69,7 @@ const Profile = () => {
                 <input
                   type="email"
                   value={userDetails.email}
-                  disabled
+                  onChange={(e) => setUserDetails({...userDetails, email: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                 />
               </div>

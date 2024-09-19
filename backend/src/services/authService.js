@@ -29,13 +29,21 @@ const loginUser = async (email, password) => {
 };
 
 
-const updateUserName =  async (userId, newName) => {
+const updateUser =  async (userId, name, email) => {
     const user = await User.findByPk(userId);
     if(!user) {
         throw new Error("User not found");
     }
 
-    user.name = newName;
+    if(email && email !== user.email) {
+        const emailExists = await User.findOne({where: { email }});
+        if(emailExists) {
+            throw new Error("Email already in use")
+        } 
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
     await user.save();
 
     const token = jwt.sign({id: user.id, name: user.name, email: user.email}, secret, {expiresIn: "1h"});
@@ -50,5 +58,5 @@ const updateUserName =  async (userId, newName) => {
 module.exports = {
     registerUser,
     loginUser,
-    updateUserName,
+    updateUser,
 };

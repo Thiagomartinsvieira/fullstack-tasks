@@ -9,7 +9,7 @@ const Home = () => {
     <>
       <Nav />
       <div className="relative overflow-hidden bg-gray-900">
-        <div className="flex flex-col items-center justify-center min-h-screen text-center bg-cover bg-center" style={{ backgroundImage: 'url(./images/home/home_image1.jpg)' }}>
+        <div className="flex flex-col items-center justify-center min-h-screen text-center bg-cover bg-center">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 p-8">
             <h1 className="text-5xl font-bold text-white mb-4">Welcome to TaskMaster</h1>

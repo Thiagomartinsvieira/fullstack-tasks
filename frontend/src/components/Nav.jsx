@@ -21,7 +21,7 @@ const Nav = () => {
     logoutUser();
     setUserName('');
     navigate('/');
-    // window.location.reload();
+    window.location.reload();
   };
 
   const toggleMenu = () => {

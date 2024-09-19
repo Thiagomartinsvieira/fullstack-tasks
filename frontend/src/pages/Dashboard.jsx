@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { logoutUser } from '../services/AuthService';
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
@@ -17,7 +18,7 @@ const Dashboard = () => {
         const decodedToken = jwtDecode(token);
         setUserName(decodedToken.name || 'Anonymous User');
 
-        // Simulated data for activities and notifications up comming
+        // Simulated data for activities and notifications
         setRecentActivities([
           { id: 1, action: 'Created new task: "Complete project setup"' },
           { id: 2, action: 'Marked task "Research dashboard design" as done' },
@@ -47,37 +48,42 @@ const Dashboard = () => {
             This is your personalized dashboard. Manage your account, check your tasks, view reports, and more!
           </p>
 
-         
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
-            
             <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <h2 className="text-2xl font-semibold mb-4">Your Tasks</h2>
               <p className="text-white">View and manage your tasks with ease.</p>
-              <button className="mt-4 px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md">Go to Tasks</button>
+              <Link
+                to="/my-tasks"
+                className="mt-4 inline-block px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md"
+              >
+                Go to Tasks
+              </Link>
             </div>
 
-            
             <div className="bg-green-500 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <h2 className="text-2xl font-semibold mb-4">Account Settings</h2>
               <p className="text-white">Manage your account settings and update your profile.</p>
-              <button className="mt-4 px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-md">
+              <Link
+                to="/profile"
+                className="mt-4 inline-block px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-md"
+              >
                 Manage Account
-              </button>
+              </Link>
             </div>
 
-            
             <div className="bg-yellow-500 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <h2 className="text-2xl font-semibold mb-4">Reports</h2>
               <p className="text-white">Check your performance reports and insights.</p>
-              <button className="mt-4 px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-md">
+              <Link
+                to="/reports"
+                className="mt-4 inline-block px-4 py-2 bg-yellow-700 hover:bg-yellow-800 text-white rounded-md"
+              >
                 View Reports
-              </button>
+              </Link>
             </div>
           </div>
 
-         
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
-            
             <div className="bg-gray-200 text-gray-800 p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold mb-4">Recent Activities</h2>
               <ul className="space-y-4">
@@ -89,9 +95,8 @@ const Dashboard = () => {
               </ul>
             </div>
 
-          
             <div className="bg-gray-200 text-gray-800 p-6 rounded-lg shadow-md">
-              <h2 className="text-2xl font-semibold mb-4">Notifications</h2> 
+              <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
               <ul className="space-y-4">
                 {notifications.map((notification) => (
                   <li key={notification.id} className="border-b pb-2">
@@ -102,17 +107,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          
           <div className="mt-10">
-            <button
-              onClick={() => {
-                localStorage.removeItem('token');
-                navigate('/login');
-              }}
-              className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
+            <Link
+              onClick={() => { logoutUser(); navigate("/"); }}
+              className="inline-block px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
             >
               Logout
-            </button>
+            </Link>
           </div>
         </div>
       </div>

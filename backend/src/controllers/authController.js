@@ -1,6 +1,6 @@
 // authController
 
-const { registerUser, loginUser, updateUserName } = require('../services/authService');
+const { registerUser, loginUser, updateUser } = require('../services/authService');
 
 exports.register = async (req, res) => {
     try {
@@ -20,13 +20,15 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.updateUserName = async (req, res) => {
+exports.update = async (req, res) => {
     try {
         const userId = req.user.id;
-        const newName = req.body.name;
-        const updateUser = await updateUserName(userId, newName);
-        res.status(200).json({message: "User name update successfully", user: updateUser.user, token: updateUser.token})
+        const {name, email} = req.body;
+        const userUpdate = await updateUser(userId, name, email);
+        res.status(200).json({message: "User update successfully", user: userUpdate.user, token: userUpdate.token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 }
+
+

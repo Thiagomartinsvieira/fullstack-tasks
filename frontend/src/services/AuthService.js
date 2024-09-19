@@ -14,12 +14,12 @@ export const loginUser = async (email, password) => {
 };
 
 
-export const updateName = async (name) => {
+export const updateUser = async (name, email) => {
   const token = localStorage.getItem("token");
   try {
     const response = await axios.put(
         `${API_URL}profile`, 
-        {name},
+        {name,email},
         {headers: {
             Authorization: `Bearer ${token}`
         }}
@@ -27,7 +27,7 @@ export const updateName = async (name) => {
     localStorage.setItem("token", response.data.token)
     return response.data;
   } catch (error) {
-    console.log("Error updating name:", error.message);
+    console.log("Error updating user:", error.message);
     throw error
   }
 }
