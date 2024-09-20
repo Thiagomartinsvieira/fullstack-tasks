@@ -28,7 +28,7 @@ const loginUser = async (email, password) => {
 };
 
 
-const updateUser =  async (userId, name, email, phoneNumber) => {
+const updateUser =  async (userId, name, email, phoneNumber, bio) => {
     const user = await User.findByPk(userId);
     if(!user) {
         throw new Error("User not found");
@@ -44,9 +44,10 @@ const updateUser =  async (userId, name, email, phoneNumber) => {
     user.name = name || user.name;
     user.email = email || user.email;
     user.phoneNumber = phoneNumber || user.phoneNumber;
+    user.bio = bio || user.bio;
     await user.save();
 
-    const token = jwt.sign({id: user.id, name: user.name, email: user.emai, phoneNumber: user.phoneNumber}, secret, {expiresIn: "1h"});
+    const token = jwt.sign({id: user.id, name: user.name, email: user.email, phoneNumber: user.phoneNumber, bio: user.bio}, secret, {expiresIn: "1h"});
 
     return {
         user,

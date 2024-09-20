@@ -5,28 +5,32 @@ import Footer from '../components/Footer';
 import { deleteUser, getProfile, logoutUser, updateUser } from '../services/AuthService';
 
 const Profile = () => {
-  const [userDetails, setUserDetails] = useState({ name: '', email: '', phone: '', });
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    bio: '',  
+  });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const updateProfile = () => {
-    updateUser(userDetails.name, userDetails.email, userDetails.phone)
+    updateUser(userDetails.name, userDetails.email, userDetails.phone, userDetails.bio)  // Inclua bio
       .then(() => {
-        console.log("User updated with Successfuly")
+        console.log("User updated successfully");
       })
       .catch((error) => {
-        console.log("Error to update user:", error);
+        console.log("Error updating user:", error);
       });
   }
 
   const deleteAccount = () => {
     const confirmed = window.confirm("Are you sure want to delete your account? This action cannot be undone.");
 
-    if(confirmed) {
+    if (confirmed) {
       deleteUser();
-      navigate("/login")
+      navigate("/login");
     }
-
   }
 
   useEffect(() => {
@@ -36,7 +40,8 @@ const Profile = () => {
         setUserDetails({
           name: data.user.name || '',
           email: data.user.email || '',
-          phone: data.user.phoneNumber || ''
+          phone: data.user.phoneNumber || '',
+          bio: data.user.bio || '', 
         });
         setLoading(false);
       } catch (error) {
@@ -47,7 +52,6 @@ const Profile = () => {
 
     fetchProfile();
   }, [navigate]);
-
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen bg-gray-100">Loading...</div>;
@@ -63,6 +67,7 @@ const Profile = () => {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold mb-4 text-gray-800">Profile Information</h2>
+
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-medium mb-2">Name</label>
                 <input
@@ -72,6 +77,7 @@ const Profile = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition"
                 />
               </div>
+
               <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-medium mb-2">Email</label>
                 <input
@@ -80,17 +86,6 @@ const Profile = () => {
                   onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
                   className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
                   disabled
-                />
-              </div>
-                
-
-              <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Profile Photo</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setUserDetails({ ...userDetails, profilePhoto: e.target.files[0] })}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
                 />
               </div>
 
@@ -112,9 +107,15 @@ const Profile = () => {
               </button>
             </div>
 
-            <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md">
+            <div className="bg-blue-500 p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold mb-4">Additional Info</h2>
-              <p className="text-white">More details coming soon!</p>
+              <textarea
+                value={userDetails.bio}
+                onChange={(e) => setUserDetails({ ...userDetails, bio: e.target.value })}
+                placeholder="Short Bio"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+                rows="5"
+              />
             </div>
           </div>
 

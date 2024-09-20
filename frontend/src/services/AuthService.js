@@ -14,12 +14,12 @@ export const loginUser = async (email, password) => {
 };
 
 
-export const updateUser = async (name, email, phoneNumber) => {
+export const updateUser = async (name, email, phoneNumber, bio) => {
   const token = localStorage.getItem("token");
   try {
     const response = await axios.put(
         `${API_URL}profile`, 
-        {name,email, phoneNumber},
+        {name,email, phoneNumber, bio},
         {headers: {
             Authorization: `Bearer ${token}`
         }}

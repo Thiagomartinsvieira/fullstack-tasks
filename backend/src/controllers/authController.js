@@ -22,8 +22,8 @@ exports.login = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const userId = req.user.id;
-        const {name, email, phoneNumber} = req.body;
-        const userUpdate = await updateUser(userId, name, email, phoneNumber);
+        const {name, email, phoneNumber, bio} = req.body;
+        const userUpdate = await updateUser(userId, name, email, phoneNumber, bio);
         res.status(200).json({message: "User update successfully", user: userUpdate.user, token: userUpdate.token})
     } catch (error) {
         res.status(400).json({error: error.message})

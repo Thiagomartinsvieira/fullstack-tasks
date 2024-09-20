@@ -25,5 +25,12 @@ sequelize.sync().catch(error => {
     console.log('Unable to connect to the database: ', error);
 });
 
+// sequelize.sync({ alter: true }) 
+//     .then(() => {
+//         console.log('Banco de dados sincronizado com sucesso!');
+//     })
+//     .catch((error) => {
+//         console.error('Erro ao sincronizar o banco de dados:', error);
+//     });
 
 module.exports = app;
