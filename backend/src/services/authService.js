@@ -1,4 +1,3 @@
-// authService
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
@@ -55,9 +54,21 @@ const updateUser =  async (userId, name, email, phoneNumber) => {
     }
 }
 
+const deleteUser = async (userId) => {
+    const user = await User.findByPk(userId);
+    if(!user) {
+        throw new Error("User not found")
+    }
+
+    await user.destroy();
+    return {message: "User deleted successfuly"}
+    
+}
+
 
 module.exports = {
     registerUser,
     loginUser,
     updateUser,
+    deleteUser,
 };

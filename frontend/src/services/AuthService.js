@@ -51,3 +51,20 @@ export const getProfile = async () => {
 export const logoutUser = () => {
     localStorage.removeItem('token')
 }
+
+export const deleteUser = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.delete(`${API_URL}profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+
+    localStorage.removeItem("token")
+    return response.data;
+  } catch (error) {
+    console.log("Error deleting profile", error.message)
+    throw error;
+  }
+}
