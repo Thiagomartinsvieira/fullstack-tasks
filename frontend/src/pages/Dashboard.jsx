@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { logoutUser } from '../services/AuthService';
+import { getRecentTasks } from '../services/TaskService';
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
@@ -12,30 +13,31 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        setUserName(decodedToken.name || 'Anonymous User');
-
-        // Simulated data for activities and notifications
-        setRecentActivities([
-          { id: 1, action: 'Created new task: "Complete project setup"' },
-          { id: 2, action: 'Marked task "Research dashboard design" as done' },
-          { id: 3, action: 'Updated profile information' },
-        ]);
-
-        setNotifications([
-          { id: 1, message: 'Reminder: Task "Submit report" is due tomorrow' },
-          { id: 2, message: 'You have a new message from Admin' },
-        ]);
-      } else {
+    const fetchRecentTasks = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          setUserName(decodedToken.name || 'Anonymous User');
+        
+          const recentTasks = await getRecentTasks(token)
+          console.log(recentTasks)
+          setRecentActivities(recentTasks);
+  
+          setNotifications([
+            { id: 1, message: 'Reminder: Task "Submit report" is due tomorrow' },
+            { id: 2, message: 'You have a new message from Admin' },
+          ]);
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error decoding token:', error);
         navigate('/login');
       }
-    } catch (error) {
-      console.error('Error decoding token:', error);
-      navigate('/login');
-    }
+    } 
+
+    fetchRecentTasks();
   }, [navigate]);
 
   return (
@@ -89,7 +91,7 @@ const Dashboard = () => {
               <ul className="space-y-4">
                 {recentActivities.map((activity) => (
                   <li key={activity.id} className="border-b pb-2">
-                    {activity.action}
+                    <strong>{activity.title}</strong>: {activity.description}
                   </li>
                 ))}
               </ul>

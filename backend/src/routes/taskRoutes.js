@@ -7,6 +7,7 @@ router.use(authMiddleware);
 
 router.post('/', taskController.createTask);
 router.get('/', taskController.getTasks);
+router.get('/recent', taskController.getRecentTasks);
 router.get('/:id', taskController.getTaskById);
 router.put('/:id', taskController.updateTask);
 router.delete('/:id', taskController.deleteTask);

@@ -34,6 +34,23 @@ export const getTasks = async (token) => {
     }
 };
 
+
+export const getRecentTasks = async (token) => {
+    try {
+        const response = await axios.get(`${API_URL}/recent`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        return response.data;
+        
+    } catch (error) {
+        console.log("Error fetching tasks:", error);
+        throw error;
+    }
+};
+
 export const getTaskById = async (id, token) => {
     try {
         const response = await axios.get(`${API_URL}/${id}`, {

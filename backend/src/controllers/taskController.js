@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Task = require("../models/Task");
 const taskService = require("../services/taskService");
 
@@ -17,6 +18,21 @@ const getTasks = async (req, res) => {
         const userId = req.user.id; 
         const tasks = await taskService.getTasks(userId);
         res.status(200).json(tasks);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to get tasks" });
+    }
+};
+
+const getRecentTasks = async (req, res) => {
+    try {
+        const userId = req.user.id; 
+        const recentTasks = await Task.findAll({
+            where: {userId},
+            order: [['createdAt', 'DESC']],
+            limit: 3,
+        });
+
+        res.status(200).json(recentTasks);
     } catch (error) {
         res.status(500).json({ error: "Failed to get tasks" });
     }
@@ -86,4 +102,5 @@ module.exports = {
     updateTask,
     deleteTask,
     toggleTaskCompletion,
+    getRecentTasks,
 };
