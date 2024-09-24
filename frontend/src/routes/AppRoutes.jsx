@@ -7,6 +7,7 @@ import Tasks from '../pages/Tasks';
 import CreateTask from '../pages/CreateTask';
 import EditTask from '../pages/EditTask';
 import Profile from '../pages/Profile';
+import Reports from '../pages/Reports';
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -22,6 +23,7 @@ const AppRoutes = () => {
         <Route path='tasks/new' element={<CreateTask token={token} />} /> 
         <Route path='/tasks/edit/:id' element={<EditTask token={token} />} /> 
         <Route path='/profile' element={<Profile /> } />
+        <Route path='/reports' element={<Reports />} />
       </Routes>
     </BrowserRouter>
   );
