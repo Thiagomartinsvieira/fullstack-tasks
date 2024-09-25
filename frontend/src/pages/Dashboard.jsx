@@ -90,8 +90,8 @@ const Dashboard = () => {
               <h2 className="text-2xl font-semibold mb-4">Recent Activities</h2>
               <ul className="space-y-4">
                 {recentActivities.map((activity) => (
-                  <li key={activity.id} className="border-b pb-2">
-                    <strong>{activity.title}</strong>: {activity.description}
+                  <li key={activity.id} className={`border-b pb-2 ${activity.completed ? 'line-through text-gray-500' : ''}`}>
+                    <strong>{activity.title}</strong>: {activity.description} 
                   </li>
                 ))}
               </ul>
@@ -101,7 +101,7 @@ const Dashboard = () => {
               <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
               <ul className="space-y-4">
                 {notifications.map((notification) => (
-                  <li key={notification.id} className="border-b pb-2">
+                  <li key={notification.id} className={`border-b pb-2 ${notification.completed ? 'line-through text-gray-500 bg' : ''}`}>
                     {notification.message}
                   </li>
                 ))}

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Nav from '../components/Nav';
-import backgroundImage from '../../public/images/home/home_image1.webp';
+import backgroundImage from '/images/home/home_image1.webp';
 
 const Home = () => {
 
@@ -17,18 +18,19 @@ const Home = () => {
             <p className="text-lg text-gray-300 mb-8">Manage your tasks efficiently and stay organized.</p>
           {!token && (
               <div className="flex justify-center space-x-4">
-              <a
-                href="/register"
+              <Link
+
+                to="/register"
                 className="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
               >
                 Get Started
-              </a>
-              <a
-                href="/login"
+              </Link>
+              <Link
+                to="/login"
                 className="px-6 py-3 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition duration-300"
               >
                 Login
-              </a>
+              </Link>
             </div>
           )}
           </div>
